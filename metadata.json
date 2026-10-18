@@ -1,0 +1,99 @@
+{
+  "schema_version": 2,
+  "task_id": "lever-8c2a45dd",
+  "source_repo": "solvespace/solvespace",
+  "base_commit": "8ef723e145fbe3f1d19e74667c59df795d9d3479",
+  "license": "GPL-3.0",
+  "language": "cpp",
+  "task_type": "refactor",
+  "target_difficulty": "Expert",
+  "target_context_items": 10,
+  "target_solution_files": 5,
+  "context_items": [
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    },
+    {
+      "path": ""
+    }
+  ],
+  "targets": [
+    {
+      "id": 1,
+      "target_file": "",
+      "output_contract": "",
+      "target_symbol": "",
+      "covers": {
+        "fail2pass": [],
+        "pass2pass": []
+      }
+    },
+    {
+      "id": 2,
+      "target_file": "",
+      "output_contract": "",
+      "target_symbol": "",
+      "covers": {
+        "fail2pass": [],
+        "pass2pass": []
+      }
+    },
+    {
+      "id": 3,
+      "target_file": "",
+      "output_contract": "",
+      "target_symbol": "",
+      "covers": {
+        "fail2pass": [],
+        "pass2pass": []
+      }
+    },
+    {
+      "id": 4,
+      "target_file": "",
+      "output_contract": "",
+      "target_symbol": "",
+      "covers": {
+        "fail2pass": [],
+        "pass2pass": []
+      }
+    },
+    {
+      "id": 5,
+      "target_file": "",
+      "output_contract": "",
+      "target_symbol": "",
+      "covers": {
+        "fail2pass": [],
+        "pass2pass": []
+      }
+    }
+  ],
+  "cross_file_rationale": "",
+  "FAIL_TO_PASS": [],
+  "PASS_TO_PASS": []
+}

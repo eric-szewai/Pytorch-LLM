@@ -1,0 +1,20 @@
+# Project Lever -- PR comment commands. Comment `/lever model-run` on this PR to re-run Auto QC and
+# pass@ on its current commit. Do not edit: the logic lives in lever-orchestration.
+name: Project Lever Command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  command:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/lever')
+    uses: handshake-project-lever/lever-orchestration/.github/workflows/lever-command.yml@main
+    secrets:
+      dispatch_token: ${{ secrets.LEVER_PASSAT_DISPATCH_TOKEN }}

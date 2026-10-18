@@ -1,0 +1,46 @@
+# Task-repo-side shim: whenever this task's PR is NOT a draft -- opened as a
+# normal PR, reopened, marked "Ready for review", or pushed to -- hand off to
+# the reusable dispatcher at
+# handshake-project-lever/lever-orchestration/.github/workflows/lever-passat-gate.yml,
+# which asks lever-orchestration to run the pass@ stage for this commit.
+#
+# lever-orchestration then (in this order, all centrally, nothing here to edit):
+#   0. waits for Auto QC ("validate / Project Lever Quality Checks") on this
+#      exact commit; if it is not green, converts the PR back to Draft and
+#      comments why -- no model calls are spent
+#   1. GPT-6-Sol solvability gate, pass@3: any failure = task rejected
+#      (check-run fails + PR comment), nothing further runs
+#   2. six Qwen3 base tiers x5, record-only, then a "Project Lever Pass@"
+#      check-run on this PR with the results
+#
+# Secrets model: this workflow needs exactly ONE secret,
+# LEVER_PASSAT_DISPATCH_TOKEN -- a PAT (or GitHub App token) that grants
+# ONLY actions:write on handshake-project-lever/lever-orchestration. The
+# revert-to-draft is done by the Lever Pass@ Reporter App from
+# lever-orchestration, so this shim needs no PR-write permission.
+#
+# Why pull_request_target: fellows open PRs from their own fork, and GitHub
+# gives a fork's pull_request run no secrets, so the dispatch would have no
+# token. pull_request_target runs this file as it is on main (a fellow cannot
+# change it from their PR) with the repo's secrets. That is only safe because
+# this job never checks out or runs the PR's code -- it sends the head SHA and
+# nothing else. Keep it that way: no actions/checkout here, ever.
+#
+# Baked into lever-task-template so every new task repo inherits it.
+
+name: Project Lever Pass@ Dispatch
+
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    # Only the authoring branch, and never while the fellow still has the PR in Draft.
+    if: github.event.pull_request.draft == false && github.head_ref == 'golden-solve'
+    uses: handshake-project-lever/lever-orchestration/.github/workflows/lever-passat-gate.yml@main
+    secrets:
+      dispatch_token: ${{ secrets.LEVER_PASSAT_DISPATCH_TOKEN }}
